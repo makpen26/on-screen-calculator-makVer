@@ -1,6 +1,6 @@
-let numberToLeftOfOperand = 0;
-let operatorBetweenLeftAndRight = ' ';
-let numberToRightOfOperand = 0;
+let numberToLeftOfOperand = '';
+let operatorBetweenLeftAndRight = '';
+let numberToRightOfOperand = '';
 
 const stringWithDigitsInside = '0123456789';
 const stringWithBasicOperatorsInside = '+-x/';
@@ -34,7 +34,7 @@ function operate(operatorBetweenLeftAndRight, numberToLeftOfOperand, numberToRig
         case '-':
             return toSubtractTwoNumbers(numberToLeftOfOperand, numberToRightOfOperand);
             break;
-        case '*':
+        case 'x':
             return toMultiplyTwoNumbers(numberToLeftOfOperand, numberToRightOfOperand);
             break;
         case '/':
@@ -46,20 +46,6 @@ function operate(operatorBetweenLeftAndRight, numberToLeftOfOperand, numberToRig
     }
 }   
 
-// console.log(toAddTwoNumbers("1", 2));
-// console.log(toAddTwoNumbers(1, 2));
-
-// console.log(toSubtractTwoNumbers(2, 2));
-// console.log(toSubtractTwoNumbers(9, "8"));
-
-// console.log(toMultiplyTwoNumbers(1, 99));
-// console.log(toMultiplyTwoNumbers(32, 23));
-
-// console.log(toDivideTwoNumbers(0, 9));
-// console.log(toDivideTwoNumbers(10, 2));
-// console.log(toDivideTwoNumbers(3, 0));
-
-//console.log(operate('-', 2, 5));
 
 const digitsButtons = document.querySelector(".digitButton");
 
@@ -119,26 +105,33 @@ digitButtonsRow4[3].textContent = "-";
 
 
 const referDisplay = document.querySelector('.inner-div-display');
+let disResult = " ";
 
-// const arrayB = [];
+const detectButtonClicked = document.querySelectorAll('.button');
+detectButtonClicked.forEach((buttonClicked) => {
+      buttonClicked.addEventListener('click', (event) => {
+        disResult += (event.target.textContent);
+        referDisplay.textContent = disResult;
 
-//  const detectButtonClicked = document.querySelectorAll('.button');
-//      detectButtonClicked.forEach((buttonClicked) => {
-//      buttonClicked.addEventListener('click', (event) => {
-//          let displayRes;
-//          arrayB.push(event.target.textContent);
-//          displayRes = arrayB.join("");
-//          referDisplay.textContent = displayRes;
+         if (stringWithDigitsInside.includes(event.target.textContent)) {
+                if(operatorBetweenLeftAndRight) {
+                    numberToRightOfOperand += event.target.textContent;
+                } else { 
+                    numberToLeftOfOperand += event.target.textContent;
+                }
+             
+         } else if (stringWithBasicOperatorsInside.includes(event.target.textContent)) {
+             operatorBetweenLeftAndRight = event.target.textContent;
+          } //else if (operatorBetweenLeftAndRight) {
+        //      numberToRightOfOperand += event.target.textContent;
+        //  }
 
-        
+        if(event.target.textContent === '=') {
+               referDisplay.textContent = operate(operatorBetweenLeftAndRight, numberToLeftOfOperand, numberToRightOfOperand);
+           }
+      });
+});
 
-//           if(event.target.textContent === '=') {
-//               referDisplay.textContent = operate(arrayB[1], arrayB[0], arrayB[2]);
-//           } else {
-//               referDisplay.textContent = arrayB.join("");
-//           }
-//      });
-//  });
 
 // const referClearAndDelete = document.querySelector('.clearAndDelete .clearBut');
 // referClearAndDelete.addEventListener('click', () => {
@@ -147,15 +140,4 @@ const referDisplay = document.querySelector('.inner-div-display');
 // });
 
 
-//referDisplay.textContent = arrayB;
 
-// detectButtonClicked.forEach((buttonClicked) => {
-//     buttonClicked.addEventListener('click', (event) => {
-//         //referDisplay.textContent = (event.target.textContent);
-//         operatorBetweenLeftAndRight = event.target.textContent;
-//         numberToLeftOfOperand = event.target.textContent;
-//         numberToRightOfOperand = event.target.textContent;
-//         // console.log(typeof operatorBetweenLeftAndRight);
-//         // console.log(typeof numberToLeftOfOperand);
-//         // console.log(typeof numberToRightOfOperand);
-// })});
